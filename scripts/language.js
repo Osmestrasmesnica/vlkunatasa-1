@@ -42,6 +42,12 @@ const content = {
             subject: 'Betreff:',
             message: 'Nachricht:',
             send: 'Senden'
+        },
+        success: {
+            title: "Vielen Dank!",
+            message: "Ihre Nachricht wurde erfolgreich gesendet. Ich melde mich so bald wie möglich bei Ihnen!",
+            backButton: "Zurück zur Hauptseite",
+            pageTitle: "Nachricht gesendet - Natasa Vlku"
         }
     },
     en: {
@@ -86,6 +92,12 @@ const content = {
             subject: 'Subject:',
             message: 'Message:',
             send: 'Send'
+        },
+        success: {
+            title: "Thank You!",
+            message: "Your message has been sent successfully. I will get back to you as soon as possible!",
+            backButton: "Back to Main Page",
+            pageTitle: "Message Sent - Natasa Vlku"            
         }
     }
 };
