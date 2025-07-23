@@ -1,0 +1,843 @@
+:root {
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: "Georgia", serif;
+  background-color: #fefefe;
+  color: #333;
+  line-height: 1.6;
+}
+
+main {
+  flex: 1;
+}
+
+.container-fluid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Frame around site */
+@media (min-width: 1200px) {
+  body {
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container-fluid {
+    margin: 40px auto;
+    /*padding: 0 20px 0 20px;*/ /*bilo je 0 40 0 40*/
+    max-width: 1200px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.1);
+    border-width: 2px;
+    background-color: var(--white);
+    min-height: calc(100vh - 80px);
+    border-radius: 10px;
+    padding: 0;
+  }
+
+
+}
+
+/* Header */
+
+/* Container wrapper for mobile menu */
+.nav-wrapper {
+  position: relative;
+  padding: 0 3rem;
+  z-index: 9999;
+  /* background-color: white; */
+  transition: all 0.1s ease;
+}
+
+/* Top navigation - responsive */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  position: relative;
+  min-height: 60px; /* Ensure consistent height */
+  height: 150px;
+}
+
+/* Desktop: Instagram left, logo center, lang-switch right */
+@media (min-width: 992px) {
+  .top-nav {
+    align-items: flex-start;
+  }
+  
+  .instagram-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+  
+  .lang-switch {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    font-size: 0.7rem;
+  }
+  
+  .burger-menu {
+    display: none;
+  }
+  
+  .mobile-instagram {
+    display: none;
+  }
+}
+
+/* Tablet and Mobile: Burger menu left, logo center, lang-switch right */
+@media (max-width: 991px) {
+  .top-nav {
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    height: 90px;
+  }
+  
+  .burger-menu {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+  }
+  
+  .lang-switch {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    font-size: 0.7rem;
+  }
+  
+  .instagram-container {
+    display: none;
+  }
+}
+
+/* Burger menu styling */
+.burger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* Instagram link styling */
+.instagram-link {
+  color: #333;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.instagram-link:hover {
+  color: #E4405F;
+}
+
+/* Lang switch styling */
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lang-btn {
+  background: none;
+  border: 1px solid #333;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.lang-btn.active {
+  background-color: #333;
+  color: white;
+}
+
+.lang-btn:hover {
+  background-color: #333;
+  color: white;
+}
+
+/* Logo styling - responsive */
+.logo {
+  max-height: 150px;
+}
+
+@media (max-width: 991px) {
+  .logo {
+    max-height: 100px;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo {
+    max-height: 80px;
+  }
+}
+
+.logo-container {
+  text-align: center;
+}
+
+/* Sub navigation - responsive */
+.sub-nav {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+  margin-bottom: 3rem;
+}
+
+.sub-nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 0;
+  padding: 0;
+}
+
+.sub-nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.sub-nav a:hover {
+  color: #666;
+}
+
+.sub-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 2px;
+  background-color: #333;
+}
+
+/* Mobile menu styling */
+@media (max-width: 991px) {
+  .sub-nav {
+    display: none;
+    border-top: none;
+    border-bottom: none;
+    padding: 0;
+    margin-bottom: 0;
+  }
+  
+  .sub-nav.show {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-top: 1px solid #eee;
+  }
+  
+  .sub-nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0 0 0;
+  }
+  
+  .sub-nav li {
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .sub-nav li:last-child {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .sub-nav a {
+    display: block;
+    padding: 1rem;
+  }
+  
+  .sub-nav a.active::after {
+    display: none;
+  }
+  
+  /* Instagram link in mobile menu */
+  .mobile-instagram {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: none;
+  }
+  
+  .mobile-instagram .instagram-link {
+    color: #333;
+    font-size: 1.5rem;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .mobile-instagram .instagram-link:hover {
+    color: #E4405F;
+  }
+}
+
+/* Main Content */
+main {
+  margin-top: 80px;
+}
+
+.section {
+  display: none;
+  /* min-height: 80vh; */
+  padding: 2rem 0;
+}
+
+.section.active {
+  display: block;
+}
+
+/* Home Section */
+/* Carousel Styles */
+.slider-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
+    height: 500px;
+}
+
+.slider {
+    display: flex;
+    position: relative;
+    height: 100%;
+}
+
+.slide {
+    min-width: 400px;
+    height: 100%;
+    margin: 0 5px; /* Smanjeno sa 10px na 5px */
+    position: relative;
+    transform: scale(0.8);
+    opacity: 0.6;
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide.active {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.slide img {
+    /* width: 100%; */
+    height: 100%;
+    object-fit: contain;
+    background-color: #f8f9fa;
+}
+
+/* Desktop - Show 3 slides */
+@media (min-width: 992px) {
+    .slider-container {
+        height: 500px;
+    }
+    
+    .slide {
+        min-width: 400px;
+        margin: 0 5px; /* 10px ukupno između slajdova */
+    }
+}
+
+/* Tablet - Show only center slide */
+@media (max-width: 991px) and (min-width: 576px) {
+    .slider-container {
+        height: 400px;
+        max-width: 400px; /* Ograniči širinu da se vidi samo centralni */
+    }
+    
+    .slide {
+        min-width: 400px;
+        margin: 0 5px;
+    }
+    
+    /* Sakrij bočne slajdove */
+    .slide:not(.active) {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/* Mobile - Show only center slide */
+@media (max-width: 575px) {
+    .slider-container {
+        height: 400px;
+        max-width: 350px; /* Još manja širina za mobilne */
+        margin: 1rem auto;
+    }
+    
+    .slide {
+        min-width: 350px;
+        margin: 0 5px;
+    }
+    
+    /* Sakrij bočne slajdove */
+    .slide:not(.active) {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/* Click indicators for desktop */
+@media (min-width: 992px) {
+    .slider-container::before {
+        content: '← Click';
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .slider-container::after {
+        content: 'Click →';
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .slider-container:hover::before,
+    .slider-container:hover::after {
+        opacity: 0.8;
+    }
+}
+
+/* Touch indicators for mobile/tablet */
+@media (max-width: 991px) {
+    .slider-container::before {
+        content: '← Swipe →';
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 12px;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+}
+
+/* Gallery Section */
+.gallery-section {
+  margin-bottom: 3rem;
+  padding-left: 2rem; /*bilo je 20px*/
+  padding-right: 2rem; /*bilo je 20px*/
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 1; /*ovo na 0 ako zeli da su duguljaste slike*/
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-separator {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #8e44ad, transparent);
+  margin: 3rem 0;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  position: relative;
+  margin: 5% auto;
+  max-width: 80%;
+  max-height: 80%;
+  text-align: center;
+  width: auto;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 8px;
+}
+
+.modal-info {
+  background-color: white;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  color: #333;
+}
+
+.close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .modal-info {
+    background-color: white;
+    padding: .5rem;
+    margin-top: 0rem;
+  }
+
+  #modal-details{
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* About Section */
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 2rem 0;
+  text-align: justify;
+}
+
+.quote {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #8e44ad;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+/* Contact Section */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #8e44ad;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-btn {
+  background-color: #8e44ad;
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #7d3c98;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .slideshow-container {
+    height: 250px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .modal-content {
+    margin: 10% auto;
+    max-width: 95%;
+  }
+}
+
+/* Placeholder images */
+.placeholder-image {
+  background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* Footer */
+.footer-separator {
+  height: 1px;
+  background: #ddd;
+  margin: 0rem 0 2rem 0;
+}
+
+.footer {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+/* About me */
+.profile-image-wrapper {
+    float: right;
+    margin: 2rem 0 1.25rem 1.75rem;
+    max-width: 300px;
+}
+
+.profile-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.bottom-image-wrapper {
+    text-align: center;
+    clear: both;
+}
+
+.bottom-image {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .profile-image-wrapper {
+        float: none;
+        margin: 0 auto 20px auto;
+        text-align: center;
+        max-width: 250px;
+    }
+    
+    .bottom-image {
+        max-width: 300px;
+    }
+
+    .container{
+      padding: 0 1rem;
+    }
+
+    .gallery-section{
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .nav-wrapper{
+      padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-image-wrapper {
+        max-width: 200px;
+    }
+    
+    .bottom-image {
+        max-width: 250px;
+    }
+}
+
+/* Back to Top dugme */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+
+/* sticky navwrapp */
+/* Kada se skroluje više od 100px */
+.nav-wrapper.is-sticky {
+  position: sticky;
+  background-color: white;
+  top: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* po želji */
+}
+
+.footer a {
+    color: inherit;
+    text-decoration: none;
+}

@@ -1,0 +1,281 @@
+/* Top navigation */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.instagram-link {
+  color: #333;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.instagram-link:hover {
+  color: #E4405F;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lang-btn {
+  background: none;
+  border: 1px solid #333;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+  background-color: #333;
+  color: white;
+}
+
+.lang-btn:hover {
+  background-color: #333;
+  color: white;
+}
+
+/* Logo styling */
+.logo {
+  max-height: 100px;
+}
+
+@media (max-width: 991px) {
+  .logo {
+    max-height: 60px;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo {
+    max-height: 50px;
+  }
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo-container img {
+  max-height: 150px;
+  width: auto;
+}
+
+/* Sub navigation */
+.sub-nav {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 991px) {
+  .sub-nav {
+    display: none; /* Hide by default on mobile/tablet */
+  }
+  
+  .sub-nav.show {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-top: 1px solid #eee;
+  }
+  
+  .sub-nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0 0 0;
+  }
+  
+  .sub-nav li {
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .sub-nav li:last-child {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .sub-nav a {
+    display: block;
+    padding: 1rem;
+  }
+  
+  /* Instagram link in mobile menu */
+  .mobile-instagram {
+    text-align: center;
+    padding: 1rem;
+    border-bottom: none;
+  }
+  
+  .mobile-instagram .instagram-link {
+    color: #333;
+    font-size: 1.5rem;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .mobile-instagram .instagram-link:hover {
+    color: #E4405F;
+  }
+}
+
+.sub-nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 0;
+  padding: 0;
+}
+
+.sub-nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.sub-nav a:hover {
+  color: #666;
+}
+
+.sub-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 2px;
+  background-color: #333;
+}
+
+@media (max-width: 991px) {
+  .sub-nav a.active::after {
+    display: none;
+  }
+}
+
+/* Container wrapper for mobile menu */
+@media (max-width: 991px) {
+  .nav-wrapper {
+    position: relative;
+  }
+}
+
+/* Desktop: Instagram left, logo center, lang-switch right */
+@media (min-width: 992px) {
+  .top-nav {
+    position: relative;
+  }
+  
+  .instagram-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+  
+  .lang-switch {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+  }
+  
+  /* Hide instagram link and mobile instagram on desktop */
+  .instagram-container {
+    display: block;
+  }
+  
+  .mobile-instagram {
+    display: none;
+  }
+}
+
+/* Tablet and Mobile: Burger menu left, logo center, lang-switch right */
+@media (max-width: 991px) {
+  .top-nav {
+    position: relative;
+    align-items: center;
+  }
+  
+  .burger-menu {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+  }
+  
+  .lang-switch {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  
+  /* Hide instagram link on mobile/tablet but show mobile version */
+  .instagram-container {
+    display: none;
+  }
+  
+  .mobile-instagram {
+    display: block;
+  }
+}
+
+/* Burger menu styling */
+.burger-menu {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+@media (max-width: 991px) {
+  .burger-menu {
+    display: block;
+  }
+}
+
+.burger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: 0.3s;
+}

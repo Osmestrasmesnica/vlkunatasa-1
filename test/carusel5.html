@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poboljšani Karusel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Georgia", serif;
+            background-color: #fefefe;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Carousel Styles */
+        .slider-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            height: 500px;
+        }
+
+        .slider {
+            display: flex;
+            position: relative;
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 400px;
+            height: 100%;
+            margin: 0 5px; /* Smanjeno sa 10px na 5px */
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0.6;
+            transition: all 0.3s ease-in-out;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .slide.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #f8f9fa;
+        }
+
+        /* Desktop - Show 3 slides */
+        @media (min-width: 992px) {
+            .slider-container {
+                height: 500px;
+            }
+            
+            .slide {
+                min-width: 400px;
+                margin: 0 5px; /* 10px ukupno između slajdova */
+            }
+        }
+
+        /* Tablet - Show only center slide */
+        @media (max-width: 991px) and (min-width: 576px) {
+            .slider-container {
+                height: 400px;
+                max-width: 400px; /* Ograniči širinu da se vidi samo centralni */
+            }
+            
+            .slide {
+                min-width: 400px;
+                margin: 0 5px;
+            }
+            
+            /* Sakrij bočne slajdove */
+            .slide:not(.active) {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        /* Mobile - Show only center slide */
+        @media (max-width: 575px) {
+            .slider-container {
+                height: 300px;
+                max-width: 300px; /* Još manja širina za mobilne */
+                margin: 1rem auto;
+            }
+            
+            .slide {
+                min-width: 300px;
+                margin: 0 5px;
+            }
+            
+            /* Sakrij bočne slajdove */
+            .slide:not(.active) {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        /* Click indicators for desktop */
+        @media (min-width: 992px) {
+            .slider-container::before {
+                content: '← Click';
+                position: absolute;
+                left: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(0,0,0,0.7);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                z-index: 10;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            
+            .slider-container::after {
+                content: 'Click →';
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(0,0,0,0.7);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                z-index: 10;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            
+            .slider-container:hover::before,
+            .slider-container:hover::after {
+                opacity: 0.8;
+            }
+        }
+
+        /* Touch indicators for mobile/tablet */
+        @media (max-width: 991px) {
+            .slider-container::before {
+                content: '← Swipe →';
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.7);
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 12px;
+                z-index: 10;
+                pointer-events: none;
+                opacity: 0.8;
+            }
+        }
+
+        /* Demo section styles */
+        .demo-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .info {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .responsive-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .responsive-info div {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #8e44ad;
+        }
+
+        .responsive-info h3 {
+            color: #8e44ad;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-section">
+        <h1>Poboljšani Beskonačni Karusel</h1>
+        
+        <div class="info">
+            <p><strong>Desktop:</strong> Prikazuje 3 slajda (centralni aktivan + 2 bočna)</p>
+            <p><strong>Tablet/Mobilni:</strong> Prikazuje samo centralni slajd</p>
+            <p><strong>Razmak:</strong> 10px između slajdova (5px margin sa svake strane)</p>
+        </div>
+
+        <div class="slider-container">
+            <div class="slider"></div>
+        </div>
+
+        <div class="responsive-info">
+            <div>
+                <h3>🖥️ Desktop (992px+)</h3>
+                <p>• Prikazuje 3 slajda istovremeno</p>
+                <p>• Centralni je uvećan i fokusiran</p>
+                <p>• Klik levo/desno za navigaciju</p>
+                <p>• Hover pauzira autoplay</p>
+            </div>
+            <div>
+                <h3>📱 Tablet (576px-991px)</h3>
+                <p>• Prikazuje samo centralni slajd</p>
+                <p>• Bočni slajdovi su skriveni</p>
+                <p>• Touch/swipe navigacija</p>
+                <p>• Kompaktna prezentacija</p>
+            </div>
+            <div>
+                <h3>📱 Mobilni (do 575px)</h3>
+                <p>• Optimizovan za male ekrane</p>
+                <p>• Samo centralni slajd je vidljiv</p>
+                <p>• Manja visina za bolje iskustvo</p>
+                <p>• Touch-friendly kontrole</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ImprovedSlider {
+            constructor() {
+                this.container = document.querySelector(".slider-container");
+                
+                if (!this.container) return;
+                
+                this.slider = document.querySelector(".slider");
+                this.slideWidth = 410; // 400px + 10px margin (5px sa svake strane)
+
+                this.images = [
+                    "https://picsum.photos/400/500?random=1",
+                    "https://picsum.photos/400/500?random=2", 
+                    "https://picsum.photos/400/500?random=3",
+                    "https://picsum.photos/400/500?random=4",
+                    "https://picsum.photos/400/500?random=5",
+                ];
+
+                this.currentIndex = 1;
+                this.isAnimating = false;
+                this.isMobile = window.innerWidth < 992;
+
+                this.init();
+            }
+
+            init() {
+                this.createSlides();
+                this.setupEventListeners();
+                this.positionSlides();
+                this.startAutoplay();
+            }
+
+            createSlides() {
+                // Za desktop kreiraj 3 kopije, za mobilne samo 1 kopiju
+                const copies = this.isMobile ? 1 : 3;
+                const totalSlides = this.images.length * copies;
+                
+                for (let i = 0; i < totalSlides; i++) {
+                    const index = i % this.images.length;
+                    const slide = document.createElement("div");
+                    slide.className = "slide";
+                    slide.innerHTML = `<img src="${this.images[index]}" alt="Slide ${index + 1}" loading="lazy">`;
+                    this.slider.appendChild(slide);
+                }
+            }
+
+            positionSlides() {
+                const slides = this.slider.querySelectorAll(".slide");
+                
+                if (this.isMobile) {
+                    // Za mobilne/tablet - jednostavno centriraj trenutni slajd
+                    const offset = (this.container.offsetWidth - this.getSlideWidth()) / 2;
+                    const baseTransform = -this.currentIndex * this.getSlideWidth() + offset;
+                    this.slider.style.transform = `translateX(${baseTransform}px)`;
+                    
+                    slides.forEach((slide, index) => {
+                        slide.classList.toggle("active", index === this.currentIndex % this.images.length);
+                    });
+                } else {
+                    // Za desktop - originalna logika
+                    const offset = (this.container.offsetWidth - this.slideWidth) / 2;
+                    const baseTransform = -this.currentIndex * this.slideWidth + offset;
+                    this.slider.style.transform = `translateX(${baseTransform}px)`;
+
+                    slides.forEach((slide, index) => {
+                        const normalizedIndex = this.normalizeIndex(index);
+                        slide.classList.toggle(
+                            "active",
+                            normalizedIndex === this.currentIndex % this.images.length
+                        );
+                    });
+                }
+            }
+
+            getSlideWidth() {
+                return this.isMobile ? (window.innerWidth < 576 ? 310 : 410) : this.slideWidth;
+            }
+
+            normalizeIndex(index) {
+                return index % this.images.length;
+            }
+
+            moveSlides(direction) {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+
+                if (this.isMobile) {
+                    // Jednostavna logika za mobilne
+                    this.currentIndex = (this.currentIndex + direction + this.images.length) % this.images.length;
+                    this.slider.style.transition = "transform 0.3s ease-out";
+                    this.positionSlides();
+                } else {
+                    // Originalna logika za desktop
+                    const slides = this.slider.querySelectorAll(".slide");
+                    this.currentIndex += direction;
+
+                    this.slider.style.transition = "transform 0.3s ease-out";
+                    this.positionSlides();
+
+                    if (
+                        this.currentIndex >= this.images.length * 2 ||
+                        this.currentIndex <= this.images.length - 1
+                    ) {
+                        setTimeout(() => {
+                            this.slider.style.transition = "none";
+                            this.currentIndex =
+                                this.currentIndex >= this.images.length * 2
+                                    ? this.currentIndex - this.images.length
+                                    : this.currentIndex + this.images.length;
+                            this.positionSlides();
+                        }, 300);
+                    }
+                }
+
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, 300);
+            }
+
+            setupEventListeners() {
+                // Click/Touch navigacija
+                this.container.addEventListener("click", (e) => {
+                    if (this.isMobile) {
+                        // Za mobilne - ceo container je touch area
+                        const rect = this.container.getBoundingClientRect();
+                        const isLeft = e.clientX < rect.left + rect.width / 2;
+                        this.moveSlides(isLeft ? -1 : 1);
+                    } else {
+                        // Za desktop - originalna logika
+                        const rect = this.container.getBoundingClientRect();
+                        const isLeft = e.clientX < rect.left + rect.width / 2;
+                        this.moveSlides(isLeft ? -1 : 1);
+                    }
+                });
+
+                // Touch events za mobilne
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                this.container.addEventListener("touchstart", (e) => {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                    this.stopAutoplay();
+                });
+
+                this.container.addEventListener("touchmove", (e) => {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX;
+                });
+
+                this.container.addEventListener("touchend", (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    
+                    const diffX = startX - currentX;
+                    if (Math.abs(diffX) > 50) { // Minimum swipe distance
+                        this.moveSlides(diffX > 0 ? 1 : -1);
+                    }
+                    
+                    this.startAutoplay();
+                });
+
+                // Resize event
+                window.addEventListener("resize", () => {
+                    const newIsMobile = window.innerWidth < 992;
+                    if (newIsMobile !== this.isMobile) {
+                        // Recreate slider for different layout
+                        this.isMobile = newIsMobile;
+                        this.slider.innerHTML = '';
+                        this.createSlides();
+                    }
+                    this.positionSlides();
+                });
+
+                // Hover events (samo za desktop)
+                if (!this.isMobile) {
+                    this.container.addEventListener("mouseenter", () => {
+                        this.stopAutoplay();
+                    });
+
+                    this.container.addEventListener("mouseleave", () => {
+                        this.startAutoplay();
+                    });
+                }
+            }
+
+            startAutoplay() {
+                this.stopAutoplay();
+                this.autoplayInterval = setInterval(() => {
+                    this.moveSlides(1);
+                }, 4000);
+            }
+
+            stopAutoplay() {
+                if (this.autoplayInterval) {
+                    clearInterval(this.autoplayInterval);
+                    this.autoplayInterval = null;
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            new ImprovedSlider();
+        });
+    </script>
+</body>
+</html>

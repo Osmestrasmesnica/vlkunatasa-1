@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="sr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beskonačni Karusel</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #f0f2f5;
+        /* uklonjeno: cursor: none; */
+      }
+
+      .slider-container {
+        width: 1200px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .slider {
+        display: flex;
+        position: relative;
+      }
+
+      .slide {
+        min-width: 400px;
+        height: 500px;
+        margin: 0 10px;
+        position: relative;
+        transform: scale(0.8);
+        opacity: 0.6;
+        transition: all 0.3s ease-in-out;
+        border-radius: 10px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .slide.active {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider-container">
+      <div class="slider"></div>
+    </div>
+
+    <script>
+      class Slider {
+        constructor() {
+          this.container = document.querySelector(".slider-container");
+          this.slider = document.querySelector(".slider");
+          this.slideWidth = 420; // 400px + 20px margin
+
+          this.images = [
+            "assets/carousel/slider-1.jpg",
+            "assets/carousel/slider-2.jpg",
+            "assets/carousel/slider-3.jpg",
+            "assets/carousel/slider-4.jpg",
+            "assets/carousel/slider-5.jpg",
+          ];
+
+          this.currentIndex = 1;
+          this.isAnimating = false;
+
+          this.init();
+        }
+
+        init() {
+          this.createSlides();
+          this.setupEventListeners();
+          this.positionSlides();
+          this.startAutoplay();
+        }
+
+        createSlides() {
+          const totalSlides = this.images.length * 3;
+          for (let i = 0; i < totalSlides; i++) {
+            const index = i % this.images.length;
+            const slide = document.createElement("div");
+            slide.className = "slide";
+            slide.innerHTML = `<img src="${this.images[index]}" alt="Slide ${index + 1}">`;
+            this.slider.appendChild(slide);
+          }
+        }
+
+        positionSlides() {
+          const slides = this.slider.querySelectorAll(".slide");
+          const offset = (this.container.offsetWidth - this.slideWidth) / 2;
+          const baseTransform = -this.currentIndex * this.slideWidth + offset;
+
+          this.slider.style.transform = `translateX(${baseTransform}px)`;
+
+          slides.forEach((slide, index) => {
+            const normalizedIndex = this.normalizeIndex(index);
+            slide.classList.toggle(
+              "active",
+              normalizedIndex === this.currentIndex % this.images.length
+            );
+          });
+        }
+
+        normalizeIndex(index) {
+          return index % this.images.length;
+        }
+
+        moveSlides(direction) {
+          if (this.isAnimating) return;
+          this.isAnimating = true;
+
+          const slides = this.slider.querySelectorAll(".slide");
+          this.currentIndex += direction;
+
+          this.slider.style.transition = "transform 0.3s ease-out";
+          this.positionSlides();
+
+          if (
+            this.currentIndex >= this.images.length * 2 ||
+            this.currentIndex <= this.images.length - 1
+          ) {
+            setTimeout(() => {
+              this.slider.style.transition = "none";
+              this.currentIndex =
+                this.currentIndex >= this.images.length * 2
+                  ? this.currentIndex - this.images.length
+                  : this.currentIndex + this.images.length;
+              this.positionSlides();
+            }, 300);
+          }
+
+          setTimeout(() => {
+            this.isAnimating = false;
+          }, 300);
+        }
+
+        setupEventListeners() {
+          this.container.addEventListener("click", (e) => {
+            const rect = this.container.getBoundingClientRect();
+            const isLeft = e.clientX < rect.left + rect.width / 2;
+            this.moveSlides(isLeft ? -1 : 1);
+          });
+
+          window.addEventListener("resize", () => this.positionSlides());
+
+          this.container.addEventListener("mouseenter", () => {
+            this.stopAutoplay();
+          });
+
+          this.container.addEventListener("mouseleave", () => {
+            this.startAutoplay();
+          });
+        }
+
+        startAutoplay() {
+          this.stopAutoplay();
+          this.autoplayInterval = setInterval(() => {
+            this.moveSlides(1);
+          }, 3000);
+        }
+
+        stopAutoplay() {
+          if (this.autoplayInterval) {
+            clearInterval(this.autoplayInterval);
+          }
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        new Slider();
+      });
+    </script>
+  </body>
+</html>

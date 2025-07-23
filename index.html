@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natasa Vlku - Artist</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/bird-logo-nobackground-crop.png" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+	
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./styles/styles.css">
+    
+</head>
+<body>
+
+    <!-- This is border around site -->
+    <div class="container-fluid">    
+    
+        <!-- Navigation bar with sub navigation -->
+        <div class="nav-wrapper">
+            <div class="top-nav">
+                <!-- Burger menu (visible only on tablet/mobile) -->
+                <button class="burger-menu" id="burger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <!-- Instagram link (visible only on desktop) -->
+                <div class="instagram-container">
+                    <a href="https://www.instagram.com/natasavlku" class="instagram-link" target="_blank">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </div>
+
+                <!-- Logo - always centered -->
+                <div class="logo-container">
+                    <img src="assets/natasa.png" alt="Natasa Vlku" class="logo">
+                </div>
+                
+                <!-- Language switch - always on right -->
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="de" style="display: none;" >DE</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+        
+            <!-- Sub navigation -->
+            <nav class="sub-nav" id="sub-nav">
+                <ul>
+                    <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                    <li><a href="#gallery" class="nav-link" data-section="gallery">Gallery</a></li>
+                    <li><a href="#about" class="nav-link" data-section="about">Über mich</a></li>
+                    <li><a href="#contact" class="nav-link" data-section="contact">Kontakt</a></li>
+                </ul>
+                <!-- Instagram link only visible in mobile menu -->
+                <div class="mobile-instagram">
+                    <a href="https://instagram.com" class="instagram-link" target="_blank">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <main class="container">
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <div class="slider-container">
+                    <div class="slider"></div>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="section">
+                <div class="gallery-section">
+                    <h2 class="section-title">Farbige Werke</h2>
+                    <div class="gallery-grid" id="colorful-gallery">
+                        <!-- Colorful artworks will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="gallery-separator"></div>
+                
+                <div class="gallery-section">
+                    <h2 class="section-title">Schwarz-Weiss Werke</h2>
+                    <div class="gallery-grid" id="bw-gallery">
+                        <!-- Black and white artworks will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="gallery-separator"></div>
+                
+                <div class="gallery-section">
+                    <h2 class="section-title">Ältere Werke</h2>
+                    <div class="gallery-grid" id="older-gallery">
+                        <!-- Older artworks will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section">
+                <div class="about-content">
+                    <h2 class="section-title">Über mich</h2>
+                        <div class="profile-image-wrapper">
+                            <img src="assets/natasa-pic.jpg" alt="Natasa Vlku" class="profile-image">
+                        </div>
+                    <div class="about-text">
+                        <p><strong>Natasa Vlku</strong></p>
+                        <p>1993 in Negotin, Serbien geboren - lebt und arbeitet in Saalfelden am Steinernen Meer.</p>
+                        <br>
+                        <p>In ihren Bildern zeigt Natasa die stille, oft übersehene Schönheit der Natur. Tiere, Pflanzen und feine Muster verbinden sich zu Kompositionen, die zwischen genauer Beobachtung und träumerischer Vorstellung schweben. Ihre Werke wirken ruhig, klar und zugleich geheimnisvoll – wie ein Blick in eine andere Welt.</p>
+                        <br>
+                        <p>Ihre bevorzugte Technik ist eine Mischung aus Gouache, Farbstiften und Finelinern. Die Liebe zu Gouachefarben entdeckte sie bereits in ihrer Schulzeit an der Modeschule Hallein – dort kam sie nicht nur erstmals mit diesem Medium in Berührung, sondern entwickelte auch ein feines Gespür für Muster, Strukturen und kleine Details, geprägt durch das gestalterische Arbeiten mit Textilien: vom Modeentwurf über die Näharbeit bis hin zum fertigen Kleidungsstück. Diese gestalterische Präzision und Liebe zum Detail prägt auch ihre heutigen Arbeiten.</p>
+                        <br>
+                        <p>Mit viel Geduld und Hingabe entstehen farbenreiche Szenen, die von Verletzlichkeit, Artenvielfalt und der Sehnsucht nach Ruhe erzählen. Ihre Bilder sind ein stiller Gegenpol zur Reizüberflutung des Alltags – eine Einladung, hinzusehen und durchzuatmen.</p>
+                        <br>
+                        <p>Die Natur ist für sie dabei mehr als nur ein Motiv. Sie ist Quelle der Inspiration, eine Welt voller Farben, Muster und Formen, die sie zeichnerisch erkundet. Auch im Alltag sucht sie bewusst die Nähe zur Natur – etwa bei Spaziergängen durch den Wald oder beim Bepflanzen ihres Gartens mit neuen Blumen. In diesen Momenten entstehen oft erste Bildideen.</p>
+                        <br>
+                        <p>Besonders häufig finden sich in ihren Arbeiten Vögel und Schmetterlinge – zarte Wesen, die sowohl für Verletzlichkeit als auch für Leichtigkeit stehen. Ihre fragile Schönheit fasziniert sie ebenso wie ihre Freiheit, sich schwerelos durch Raum und Landschaft zu bewegen.</p>
+                        <br>
+                        <p>Ergänzend zu den farbintensiven Werken entstehen auch schwarz-weisse Illustrationen. In ihrer Reduktion setzen sie einen ruhigen Kontrast zur Farbenvielfalt – feine Linien, Schattierungen und Strukturen rücken hier in den Mittelpunkt und eröffnen eine andere Art der Betrachtung.</p>
+                        <br>
+                        <p>Neben ihrer künstlerischen Arbeit ist Natasa auch als Pädagogin tätig. In ihrem beruflichen Alltag mit Kindern teilt sie ihre gestalterische Neugier – besonders im kreativen Arbeiten und gemeinsamen Ausprobieren.</p>
+                        <br>
+                        <p>Im Herbst 2025 ist ihre erste öffentliche Ausstellung im Congress Saalfelden geplant. Zu sehen ist eine Auswahl detailreicher Arbeiten, die sich der Vielfalt und Zerbrechlichkeit der Natur widmen – und dazu einladen, ihr mit mehr Achtsamkeit und Staunen zu begegnen.</p>
+                    </div>
+                    <div class="quote">
+                        "Ein Moment in der Natur – und die Ideen flattern durch den Kopf wie Schmetterlinge."
+                    </div>
+                     
+                    <div class="bottom-image-wrapper">
+                        <img src="assets/butterfly-nobackground.png" alt="Natasa Vlku artwork" class="bottom-image">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="section">
+                <div class="contact-form">
+                    <h2 class="section-title">Schreib mir!</h2>
+                    <p style="text-align: center; margin-bottom: 2rem;">Nutze dieses Formular, um mir eine Nachricht zu schreiben - ich melde mich so bald wie möglich!</p>
+                    <form action="https://api.web3forms.com/submit" method="POST">
+
+                        <!-- REQUIRED: Access Key -->
+                        <input type="hidden" name="access_key" value="a193824f-8752-4558-8cd8-f87e74b66d4a">
+
+                        <!-- OPTIONAL: Name of the sender (for email subject line) -->
+                        <input type="hidden" name="from_name" value="Natasa Vlku Website - Nachricht">
+
+                        <!-- OPTIONAL: Redirect after successful submission -->
+                       <input type="hidden" name="redirect" value="https://osmestrasmesnica.github.io/Projekat/success.html">
+
+                        <!-- ANTI-SPAM HONEYPOT -->
+                        <input type="checkbox" name="botcheck" id="" style="display:none;">
+
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Betreff:</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Nachricht:</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Senden</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <!-- Footer separator -->
+            <div class="footer-separator"></div>
+            <p>Copyright © 2025 All rights reserved | Created by 
+                <a href="https://osmestrasmesnica.github.io/vlkualeksa/" target="_blank" rel="noopener noreferrer">WLQ Innovations</a>
+            </p>
+        </footer>
+
+    <!-- End of border/frame around site -->
+    </div>
+
+    <!-- Modal for gallery images -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modal-image" class="modal-image" alt="">
+            <div class="modal-info">
+                <h3 id="modal-title"></h3>
+                <p id="modal-details"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top dugme -->
+    <button class="back-to-top" id="backToTop" title="Zurück nach oben">
+        ↑
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main JS Script -->
+	<script src="scripts/main.js"></script>
+	<script src="scripts/language.js"></script>
+
+</body>
+</html>

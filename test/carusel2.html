@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beskonačni Karusel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            padding: 20px;
+        }
+
+        .carousel-container {
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            overflow: hidden;
+            padding: 30px 0;
+        }
+
+        .carousel-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .card-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .my-card {
+            flex: 0 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            opacity: 0.8;
+            transform: scale(1);
+        }
+
+        .my-card.active {
+            opacity: 1;
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        .my-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .my-card {
+                width: calc(100% - 20px);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .my-card {
+                width: calc(33.333% - 20px);
+            }
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .indicator.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .control-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .instructions {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <h1 class="carousel-title">Beskonačni Karusel</h1>
+        <div class="card-carousel"></div>
+
+        <div class="carousel-indicators"></div>
+
+        <div class="carousel-controls">
+            <button class="control-btn prev-btn">❮</button>
+            <button class="control-btn next-btn">❯</button>
+        </div>
+
+        <p class="instructions">Koristite strelice na tastaturi ili kliknite na strelice za navigaciju</p>
+    </div>
+
+    <script>
+        const images = [
+            "assets/carousel/slider-1.jpg",
+            "assets/carousel/slider-2.jpg",
+            "assets/carousel/slider-3.jpg",
+            "assets/carousel/slider-4.jpg"
+        ];
+
+        const titles = [
+            "Prelepa žena",
+            "Slatka mačka",
+            "Divna priroda",
+            "Relaksirajuća joga"
+        ];
+
+        const carousel = document.querySelector('.card-carousel');
+        const indicatorsContainer = document.querySelector('.carousel-indicators');
+
+        let currentIndex = 1;
+        let cardWidth;
+        let cardsPerView;
+        let autoSlide;
+
+        function cloneSlides() {
+            const cards = document.querySelectorAll('.my-card');
+            const firstClone = cards[0].cloneNode(true);
+            const lastClone = cards[cards.length - 1].cloneNode(true);
+
+            firstClone.classList.add('clone');
+            lastClone.classList.add('clone');
+
+            carousel.insertBefore(lastClone, cards[0]);
+            carousel.appendChild(firstClone);
+        }
+
+        function initCarousel() {
+            carousel.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+
+            images.forEach((img, index) => {
+                const card = document.createElement('div');
+                card.className = 'my-card';
+                card.innerHTML = `<img src="${img}" alt="${titles[index]}">`;
+                carousel.appendChild(card);
+
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.dataset.index = index;
+                indicator.addEventListener('click', () => goToSlide(index + 1));
+                indicatorsContainer.appendChild(indicator);
+            });
+
+            cloneSlides();
+            updateCardWidth();
+            setTranslateX();
+        }
+
+        function updateCardWidth() {
+            const containerWidth = document.querySelector('.carousel-container').offsetWidth;
+            if (window.innerWidth < 768) {
+                cardsPerView = 1;
+                cardWidth = containerWidth;
+            } else {
+                cardsPerView = 3;
+                cardWidth = containerWidth / cardsPerView;
+            }
+
+            document.querySelectorAll('.my-card').forEach(card => {
+                card.style.width = `${cardWidth - 20}px`;
+            });
+        }
+
+        function setTranslateX() {
+            carousel.style.transform = `translateX(-${cardWidth * currentIndex}px)`;
+        }
+
+        function updateIndicators() {
+            document.querySelectorAll('.indicator').forEach((ind, i) => {
+                ind.classList.toggle('active', i === (currentIndex - 1 + images.length) % images.length);
+            });
+        }
+
+        function nextSlide() {
+            if (currentIndex >= images.length + 1) return;
+            currentIndex++;
+            setTranslateX();
+            carousel.style.transition = 'transform 0.5s ease-in-out';
+        }
+
+        function prevSlide() {
+            if (currentIndex <= 0) return;
+            currentIndex--;
+            setTranslateX();
+            carousel.style.transition = 'transform 0.5s ease-in-out';
+        }
+
+        carousel.addEventListener('transitionend', () => {
+            const cards = document.querySelectorAll('.my-card');
+            if (cards[currentIndex].classList.contains('clone')) {
+                carousel.style.transition = 'none';
+                currentIndex = currentIndex === 0 ? images.length : 1;
+                setTranslateX();
+            }
+            updateIndicators();
+        });
+
+        function goToSlide(index) {
+            currentIndex = index;
+            setTranslateX();
+            carousel.style.transition = 'transform 0.5s ease-in-out';
+        }
+
+        document.querySelector('.next-btn').addEventListener('click', nextSlide);
+        document.querySelector('.prev-btn').addEventListener('click', prevSlide);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        window.addEventListener('resize', () => {
+            updateCardWidth();
+            setTranslateX();
+        });
+
+        function startAutoSlide() {
+            autoSlide = setInterval(nextSlide, 3000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlide);
+        }
+
+        document.querySelector('.carousel-container').addEventListener('mouseenter', stopAutoSlide);
+        document.querySelector('.carousel-container').addEventListener('mouseleave', startAutoSlide);
+
+        initCarousel();
+        startAutoSlide();
+    </script>
+</body>
+</html>
